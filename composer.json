@@ -35,5 +35,10 @@
     "psr-4": {
       "Tradenart\\Payum\\Paybox\\": ""
     }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1."
+    }
   }
 }
