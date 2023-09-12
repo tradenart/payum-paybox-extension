@@ -32,7 +32,7 @@ class ConvertPaymentAction extends GatewayAwareAction implements ActionInterface
         $this->gateway->execute($currency = new GetCurrency($payment->getCurrencyCode()));
         
         $details[Api::PBX_DEVISE] = $currency->numeric;
-        $details[Api::PBX_CMD] = $payment->getCommande()->getId();
+        $details[Api::PBX_CMD] = $payment->getNumber();
         $details[Api::PBX_PORTEUR] = $payment->getClientEmail();
         $details[Api::PBX_TOTAL] = $payment->getTotalAmount();
         $details[Api::PBX_TIME] = date('c');
