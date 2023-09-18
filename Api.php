@@ -1,8 +1,11 @@
 <?php
+
 namespace Tradenart\Payum\Paybox;
 
+use DOMDocument;
 use Http\Message\MessageFactory;
 use Payum\Core\Exception\Http\HttpException;
+use Payum\Core\Exception\InvalidArgumentException;
 use Payum\Core\HttpClientInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Payum\Core\Reply\HttpPostRedirect;
@@ -45,6 +48,10 @@ class Api
 
     public const PBX_HMAC = 'PBX_HMAC';
 
+    public const PBX_BILLING = 'PBX_BILLING';
+
+    public const PBX_SHOPPINGCART = 'PBX_SHOPPINGCART';
+
 
     /**
      * @var HttpClientInterface
@@ -64,11 +71,11 @@ class Api
     protected $router;
 
     /**
-     * @param array               $options
+     * @param array $options
      * @param HttpClientInterface $client
-     * @param MessageFactory      $messageFactory
+     * @param MessageFactory $messageFactory
      *
-     * @throws \Payum\Core\Exception\InvalidArgumentException if an option is invalid
+     * @throws InvalidArgumentException if an option is invalid
      */
     public function __construct(array $options, HttpClientInterface $client, MessageFactory $messageFactory, $router)
     {
@@ -85,12 +92,12 @@ class Api
      */
     public function doPayment(array $details)
     {
-        $details[self::PBX_SITE]        = $this->options['site'];
-        $details[self::PBX_RANG]        = $this->options['rang'];
-        $details[self::PBX_IDENTIFIANT]        = $this->options['identifiant'];
-        $details[self::PBX_RETOUR]        = $this->options['retour'];
-        $details[self::PBX_HASH]        = $this->options['hash'];
-        $details[self::PBX_HMAC]        = strtoupper($this->computeHmac($details));
+        $details[self::PBX_SITE] = $this->options['site'];
+        $details[self::PBX_RANG] = $this->options['rang'];
+        $details[self::PBX_IDENTIFIANT] = $this->options['identifiant'];
+        $details[self::PBX_RETOUR] = $this->options['retour'];
+        $details[self::PBX_HASH] = $this->options['hash'];
+        $details[self::PBX_HMAC] = strtoupper($this->computeHmac($details));
 
         $authorizeTokenUrl = $this->getAuthorizeTokenUrl();
 
@@ -110,8 +117,8 @@ class Api
         }
 
         foreach ($servers as $server) {
-            $doc = new \DOMDocument();
-            $doc->loadHTMLFile('https://'. $server . "/load.html");
+            $doc = new DOMDocument();
+            $doc->loadHTMLFile('https://' . $server . "/load.html");
 
             $element = $doc->getElementById('server_status');
             if ($element && 'OK' == $element->textContent) {
@@ -130,7 +137,7 @@ class Api
         return sprintf(
             'https://%s/cgi/MYchoix_pagepaiement.cgi',
             $this->getApiEndpoint()
-            );
+        );
     }
 
     /**
@@ -141,9 +148,9 @@ class Api
     protected function computeHmac($details)
     {
         // Si la clé est en ASCII, On la transforme en binaire
-        if($this->options['sandbox']){
+        if ($this->options['sandbox']) {
             $key = $this->options['hmac_dev'];
-        }else{
+        } else {
             $key = $this->options['hmac_prod'];
         }
 
@@ -156,7 +163,7 @@ class Api
     /**
      * Makes an array of parameters become a querystring like string.
      *
-     * @param  array $array
+     * @param array $array
      *
      * @return string
      */
