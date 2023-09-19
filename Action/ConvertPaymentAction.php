@@ -13,7 +13,7 @@ use Payum\Core\Request\Convert;
 use Tradenart\Payum\Paybox\Api;
 use Payum\Core\Request\GetCurrency;
 use Payum\Core\Action\GatewayAwareAction;
-use Tradenart\Payum\Paybox\Model\PaymentBillingInfo;
+use Payum\Bundle\PayumBundle\Model\PaymentBillingInfo;
 
 class ConvertPaymentAction extends GatewayAwareAction implements ActionInterface, GatewayAwareInterface
 {
@@ -56,10 +56,12 @@ class ConvertPaymentAction extends GatewayAwareAction implements ActionInterface
             /**
              * @var PaymentBillingInfo $billing
              */
-            $billing = $payment->getDetails()['billing'];
+            $serialized = $payment->getDetails()['billing'];
         } catch (Exception $e) {
             return '';
         }
+
+        $billing = PaymentBillingInfo::unserialize($serialized);
 
 
         $pbx_prenom = substr($this->removeSpecialChar($billing->getFirstName()), 0, 30);

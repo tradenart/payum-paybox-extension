@@ -6,6 +6,12 @@
   "keywords": [
     "payment"
   ],
+  "repositories": [
+    {
+      "type": "github",
+      "url": "https://github.com/tradenart/payum-bundle.git"
+    }
+  ],
   "homepage": "https://payum.forma-pro.com",
   "license": "MIT",
   "authors": [
@@ -25,8 +31,7 @@
   "require": {
     "payum/core": "^1.7.2",
     "ext-iconv": "*",
-    "ext-iconv": "*",
-    "league/iso3166": "^4.3"
+    "tradenart/payum-bundle": "^3.0"
   },
   "require-dev": {
     "php-http/guzzle6-adapter": "^1.0"
