@@ -2,7 +2,6 @@
   "name": "tradenart/payum-paybox-extension",
   "type": "symfony-bundle",
   "description": "Custom Payum Paybox extension",
-  "version": "1.0",
   "keywords": [
     "payment"
   ],
