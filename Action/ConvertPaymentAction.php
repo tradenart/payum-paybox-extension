@@ -73,7 +73,7 @@ class ConvertPaymentAction extends GatewayAwareAction implements ActionInterface
         $pbx_country = $billing->getCountryCode();
 
 
-        $pbx_billing = "<?xml version=\"1.0\" encoding=\"utf-8\"?><Billing><Address><FirstName>" . $pbx_nom . "</FirstName>" .
+        $pbx_billing = "<?xml version=\"1.0\" encoding=\"utf-8\"?><Billing><Address><FirstName>" . $pbx_prenom . "</FirstName>" .
             "<LastName>" . $pbx_nom . "</LastName><Address1>" . $pbx_adresse1 . "</Address1>";
         if (strlen($pbx_adresse2) > 0) {
             $pbx_billing .= "<Address2>" . $pbx_adresse2 . "</Address2>";
