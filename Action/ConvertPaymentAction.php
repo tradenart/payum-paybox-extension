@@ -71,6 +71,8 @@ class ConvertPaymentAction extends GatewayAwareAction implements ActionInterface
         $pbx_zipcode = substr($billing->getZipCode(), 0, 16);
         $pbx_city = substr($billing->getCity(), 0, 50);
         $pbx_country = $billing->getCountryCode();
+		$pbx_mobile = substr($billing->getMobilePhoneNumber(), 0, 10);
+		$pbx_mobile_country_code = $billing->getMobilePhoneNumberCountryCode();
 
 
         $pbx_billing = "<?xml version=\"1.0\" encoding=\"utf-8\"?><Billing><Address><FirstName>" . $pbx_prenom . "</FirstName>" .
@@ -79,7 +81,7 @@ class ConvertPaymentAction extends GatewayAwareAction implements ActionInterface
             $pbx_billing .= "<Address2>" . $pbx_adresse2 . "</Address2>";
         }
         $pbx_billing .= "<ZipCode>" . $pbx_zipcode . "</ZipCode>" .
-            "<City>" . $pbx_city . "</City><CountryCode>" . $pbx_country . "</CountryCode>" .
+            "<City>" . $pbx_city . "</City><CountryCode>" . $pbx_country . "</CountryCode><MobilePhone>".$pbx_mobile."</MobilePhone><CountryCodeMobilePhone>+".$pbx_mobile_country_code."</CountryCodeMobilePhone>" .
             "</Address></Billing>";
 
         return $pbx_billing;
